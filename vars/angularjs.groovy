@@ -1,27 +1,15 @@
 def lintCheck() {
     sh ''' 
-         # We want Devs to handle the lint checks failure 
-         # npm i jslint 
-         # node_modules/jslint/bin/jslint.js  server.js || true 
-         echo Starting lint checks
+         echo Starting lint checks ${COMPONENT}
          echo Lint Checks Completed for ${COMPONENT}
-    ''' 
+       
+       ''' 
 }
 
 def call() {
     pipeline {
         agent any 
-    environment {
-        SONAR      = credentials('SONAR')
-    }
- 
         stages {
-            stage('Downloading the dependencies') {
-                steps {
-                    sh "npm install"
-                }
-            }
-
             stage('Lint Check') {
                 steps {
                     script { 
@@ -29,7 +17,6 @@ def call() {
                     }
                 }
             }
-
             stage('Sonar Check') {
                 steps {
                     script { 
@@ -38,7 +25,6 @@ def call() {
                     }
                 }
             }
-
            stage('Test Cases') {
             parallel {
                 stage('Unit Tests') {
@@ -58,26 +44,6 @@ def call() {
                     }
                 }
             }
-
-            stage('Prepare Artifacts') {
-                when {
-                    expression { env.TAG_NAME != null }   // Only runs when you run this against the TAG
-                }
-                steps {
-                    echo 'echo'
-                }
-            }
-
-            stage('Upload Artifacts') {
-                when {
-                    expression { env.TAG_NAME != null }   // Only runs when you run this against the TAG
-                }
-                steps {
-                    echo 'echo'
-                }
-            }
         }    // end of statges 
     }
 }
-
-// call is the default function which will be called when you call the fileName 
