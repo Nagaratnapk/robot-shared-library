@@ -44,7 +44,7 @@ def call() {
 //                 }
 //                 steps {
 //                     script {
-//                         env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://172.31.0.75:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true')
+//                         env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://172.31.2.181:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true')
 //                         print UPLOAD_STATUS
 //                     }
 //                 }
@@ -71,7 +71,7 @@ def call() {
 //                 }
 //                 steps {
 //                     sh ''' 
-//                         curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.0.75:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+//                         curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.2.181:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
 //                     '''
 //                 }
 //             }
